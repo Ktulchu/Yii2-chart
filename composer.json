@@ -1,0 +1,21 @@
+{
+    "name": "rkdev/yii2-chart",
+    "description": "bar charts",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","chart","plot"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Roman V Komorin",
+            "email": "roma442006@yandex.ru"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "rkdev\\chart\\": ""
+        }
+    }
+}
