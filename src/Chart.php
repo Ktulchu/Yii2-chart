@@ -37,6 +37,12 @@ class Chart extends Component
      */
 	public $nameAttribute;
 	
+	/**
+     * model attribute date time for range
+     * @var string
+     */
+	public $created_at = 'created_at';
+	
 	 //Init function
 	public function init()
 	{	
@@ -63,15 +69,15 @@ class Chart extends Component
      */
 	private function getData()
 	{
-		if($this->range != 'year') $selsect = ['FROM_UNIXTIME(created_at, "%Y-%m-%d") AS pop_date'];
-			else $selsect = ['FROM_UNIXTIME(created_at, "%Y-%m") AS pop_date'];
+		if($this->range != 'year') $selsect = ['FROM_UNIXTIME('. $this->created_at .', "%Y-%m-%d") AS pop_date'];
+			else $selsect = ['FROM_UNIXTIME('. $this->created_at .', "%Y-%m") AS pop_date'];
 		
 		$modelName = $this->modelName;
 		
 		$dates = $modelName::find()
 		    ->select($selsect)
-			->where('created_at >= :datestart', [':datestart' => $this->start])
-			->andWhere('created_at <= :dateend', [':dateend' => $this->end])
+			->where( $this->created_at .' >= :datestart', [':datestart' => $this->start])
+			->andWhere( $this->created_at .' <= :dateend', [':dateend' => $this->end])
 			->distinct(true)
 			->indexBy('pop_date')
 			->asArray()
@@ -95,16 +101,16 @@ class Chart extends Component
 				}
 				
 				$requwest = $modelName::find()
-					->where('created_at >= :datestart', [':datestart' => $datestart])
-					->andwhere('created_at <= :datend', [':datend' => $datend])
+					->where( $this->created_at .' >= :datestart', [':datestart' => $datestart])
+					->andwhere( $this->created_at .' <= :datend', [':datend' => $datend])
 					->count();
 				
 				if($this->nameAttribute)
 				{
 					$rangeArray = $modelName::find()
 						->select([$this->nameAttribute, 'COUNT('. $this->nameAttribute .') AS pop_cout'])
-						->where('created_at >= :datestart', [':datestart' => $datestart])
-						->andwhere('created_at <= :datend', [':datend' => $datend])
+						->where( $this->created_at .' >= :datestart', [':datestart' => $datestart])
+						->andwhere( $this->created_at .' <= :datend', [':datend' => $datend])
 						->groupBy($this->nameAttribute)
 						->asArray()
 						->indexBy('pop_cout')
