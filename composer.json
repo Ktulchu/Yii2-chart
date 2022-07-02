@@ -24,7 +24,7 @@
         "psr-4": {
             "rkdev\\chart\\": "src"
         }
-    }
+    },
     "repositories": [
         {
             "type": "git",
