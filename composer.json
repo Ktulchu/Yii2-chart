@@ -1,5 +1,5 @@
 {
-    "name": " rkdev/yii2-chart ",
+    "name": "yii2-chart ",
     "description": "Package bar charts",
     "version": "1.0.1",
     "type": "yii2-extension",
