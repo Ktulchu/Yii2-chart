@@ -28,4 +28,9 @@ Usage
 Once the extension is installed, simply use it in your code by  :
 
 ```php
-<?= \rkdev\chart\Chartwidget::widget(); ?>
+<?= \rkdev\chart\Chartwidget::widget([
+		'options'=> [
+			'modelName' => 'common\models\Accsesslog',  // Model ActiveRecord
+			'created_at' => 'datetime', // property inmodel ActiveRecord for range by day : week : month (intenger)
+		]
+]); ?>
