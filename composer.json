@@ -1,6 +1,7 @@
 {
     "name": "rkdev/yii2-chart",
     "description": "bar charts",
+    "version": "1.0.0",
     "type": "yii2-extension",
     "keywords": ["yii2","extension","chart","plot"],
     "license": "MIT",
