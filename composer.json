@@ -1,5 +1,5 @@
 {
-    "name": " Ktulchu/Yii2-chart ",
+    "name": " ktulchu/yii2-chart ",
     "description": "Package bar charts",
     "version": "1.0.1",
     "type": "yii2-extension",
@@ -29,7 +29,7 @@
     "repositories": [
         {
             "type": "git",
-            "url": "ktulchu/yii2-chart"
+            "url": "Ktulchu/Yii2-chart"
         }
     ]
 }
