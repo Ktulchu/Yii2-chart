@@ -28,4 +28,4 @@ Usage
 Once the extension is installed, simply use it in your code by  :
 
 ```php
-<?= \rkdev\chart\AutoloadExample::widget(); ?>```Could not open input file: echo
+<?= \rkdev\chart\Chartwidget::widget(); ?>```Could not open input file: echo
