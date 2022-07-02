@@ -10,7 +10,7 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist  ktulchu/yii2-chart/yii2-chart "*"
+php composer.phar require --prefer-dist  ktulchu/yii2-chart "*"
 ```
 
 or add
