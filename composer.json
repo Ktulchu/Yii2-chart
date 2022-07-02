@@ -29,7 +29,7 @@
     "repositories": [
         {
             "type": "git",
-            "url": "Ktulchu/Yii2-chart"
+            "url": "ktulchu/yii2-chart"
         }
     ]
 }
