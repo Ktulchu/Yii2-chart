@@ -43,19 +43,25 @@ class Chart extends Component
      */
 	public $created_at = 'created_at';
 	
-	 //Init function
+	 /** Init function
+	 * Set day by rainge interval firsr day and last day by interval
+	 */
 	public function init()
 	{	
 		
 		if($this->start === null){
 			if(date('w') == 0) $this->start = date('U', strtotime(date('U'). " - 6 day"));
 				else $this->start = date('U') - ((date('w') -1) * 86400);
+		} else {
+			if(!is_numeric($this->start)) $this->start = date('U', strtotime($this->start));
+			if(date('w', $this->start) == 0) $this->start = strtotime($this->start . " - 6 day");
+				else $this->start = $this->start - ((date('w', $this->start) -1) * 86400);
 		}
-	
+			
 		if($this->end === null){
-			if(date('w') == 0) $this->end = date('U', strtotime(date('U'). " + 6 day"));
+			if(date('w', $this->start) == 0) $this->end = strtotime( $this->start . " + 6 day");
 				else $this->end = $this->start + (86400 * 7);	
-		}
+		} 
 		
 		if (!$this->modelName) {
             throw new InvalidConfigException('You must specify a class for the working model');
@@ -104,6 +110,8 @@ class Chart extends Component
 					->where( $this->created_at .' >= :datestart', [':datestart' => $datestart])
 					->andwhere( $this->created_at .' <= :datend', [':datend' => $datend])
 					->count();
+					
+				
 				
 				if($this->nameAttribute)
 				{
@@ -122,14 +130,14 @@ class Chart extends Component
 					'total_poprequests' => ($this->nameAttribute) ? array_sum(array_keys($pop_cout)) : 0,	
 				];
 			}
-			
-			
+
 			return $total;
 		}
 		$total[date('d.m.Y')] = [
 			'total' => 0,
 			'total_poprequests' =>0,	
 		];
+		
 		return $total;
 	}
 
