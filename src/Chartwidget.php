@@ -12,9 +12,7 @@ use yii\bootstrap4\ActiveForm;
 class Chartwidget extends \yii\base\Widget
 {
     public $options;
-		
-	public $sourcePath = '@vendor/ktulchu/yii2-chart/assets/';
-	
+			
 	public function run()
     {
 		
