@@ -6,11 +6,9 @@ use yii\web\AssetBundle;
 
 class ChartAssetsBundle extends AssetBundle
 {
-    public $sourcePath = __DIR__ . '/../assets';
-
+    // Pinned UMD build: works without bundlers. Override this bundle to self-host Chart.js.
     public $js = [
-        'flot/jquery.flot.js',
-        'flot/jquery.flot.resize.min.js',
+        'https://cdn.jsdelivr.net/npm/chart.js@4.6.1/dist/chart.umd.min.js',
     ];
 
     public $depends = [

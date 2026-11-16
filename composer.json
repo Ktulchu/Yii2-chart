@@ -1,9 +1,8 @@
 {
     "name": "ktulchu/yii2-chart",
-    "description": "Package bar charts",
-    "version": "1.0.1",
+    "description": "ActiveRecord time-series charts for Yii2",
     "type": "yii2-extension",
-    "keywords": ["yii2", "extension", "chart", "plot"],
+    "keywords": ["yii2", "extension", "chart", "analytics", "chart.js"],
     "license": "MIT",
     "authors": [
         {
