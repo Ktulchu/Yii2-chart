@@ -1,0 +1,23 @@
+{
+    "name": "ktulchu/yii2-chart",
+    "description": "ActiveRecord time-series charts for Yii2",
+    "type": "yii2-extension",
+    "keywords": ["yii2", "extension", "chart", "analytics", "chart.js"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Roman V Komorin",
+            "email": "roma442006@yandex.ru",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "yiisoft/yii2": "^2.0.50"
+    },
+    "autoload": {
+        "psr-4": {
+            "rkdev\\chart\\": "src/"
+        }
+    }
+}

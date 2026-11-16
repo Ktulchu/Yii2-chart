@@ -1,0 +1,71 @@
+name: PHP 8 and database compatibility
+
+on:
+  push:
+    branches: [master, 'fix/**', 'feat/**']
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.0', '8.2', '8.4', '8.5']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '${{ matrix.php }}'
+      - name: Syntax checks and smoke tests
+        run: |
+          php -l src/Chart.php
+          php -l src/Chartwidget.php
+          php -l src/ChartAssetsBundle.php
+          php -l tests/smoke.php
+          php -l tests/integration.php
+          php tests/smoke.php
+
+  integration:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: test
+          MYSQL_DATABASE: chart_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd "mysqladmin ping -h 127.0.0.1 -ptest"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 12
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: chart_test
+          POSTGRES_PASSWORD: test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: pdo_mysql, pdo_pgsql
+          tools: composer:v2
+      - name: Install Yii2
+        run: |
+          composer config --no-plugins repositories.asset-packagist composer https://asset-packagist.org
+          composer config --no-plugins allow-plugins.yiisoft/yii2-composer true
+          composer install --no-interaction --prefer-dist --no-progress
+      - name: MySQL and PostgreSQL integration
+        run: |
+          DB_DRIVER=mysql php tests/integration.php
+          DB_DRIVER=pgsql php tests/integration.php
