@@ -2,58 +2,49 @@
 
 namespace rkdev\chart;
 
-use rkdev\chart\Chart;
+use yii\base\Widget;
+use yii\helpers\Html;
+use yii\helpers\Json;
 use yii\web\View;
-use rkdev\chart\ChartAssetsBundle;
-use yii\bootstrap4\ActiveForm;
+
 /**
- * This is plot chart.
+ * Renders a bar chart with Flot.
  */
-class Chartwidget extends \yii\base\Widget
+class Chartwidget extends Widget
 {
-    public $options;
-			
-	public function run()
+    public $options = [];
+
+    public function run()
     {
-		
-		$view = $this->getView();
-		
-		ChartAssetsBundle::register($view);
-		
-		$model = new Chart($this->options);
-					
-		$json = json_encode($model->getChart());
-		
-		$html = '<div id="chart" style="height: 260px;"></div>';
-						
-		$chart = <<< JS
-			var json = $json;
-			if (typeof json['total'] == 'undefined') { return false; }	  
-			  var option = {	
-				shadowSize: 0,
-				colors: ['#9FD5F1', '#1065D2'],
-				bars: { 
-					show: true,
-					fill: true,
-					lineWidth: 1
-				},
-				grid: {
-					backgroundColor: '#FFFFFF',
-					hoverable: true
-				},
-				points: {
-					show: false
-				},
-				xaxis: {
-					show: true,
-					ticks: json['xaxis']
-				}
-			}
-			$.plot('#chart', [json['total'], json['poprequests']], option);
-		JS;
+        $view = $this->getView();
+        ChartAssetsBundle::register($view);
 
-		$this->getView()->registerJs($chart);
+        $model = new Chart($this->options);
+        $json = Json::htmlEncode($model->getChart());
+        $id = $this->getId() . '-chart';
+        $jsId = Json::htmlEncode($id);
+        $html = Html::tag('div', '', ['id' => $id, 'style' => 'height: 260px;']);
 
-		return $html;
+        $chart = <<<JS
+(function () {
+    var data = $json;
+    if (!data.total) {
+        return;
+    }
+    var options = {
+        shadowSize: 0,
+        colors: ['#9FD5F1', '#1065D2'],
+        bars: {show: true, fill: true, lineWidth: 1},
+        grid: {backgroundColor: '#FFFFFF', hoverable: true},
+        points: {show: false},
+        xaxis: {show: true, ticks: data.xaxis}
+    };
+    $.plot(document.getElementById($jsId), [data.total, data.poprequests], options);
+})();
+JS;
+
+        $view->registerJs($chart, View::POS_READY, $id);
+
+        return $html;
     }
 }
