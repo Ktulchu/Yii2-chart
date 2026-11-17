@@ -1,6 +1,6 @@
 <?php
 
-namespace rkdev\chart;
+namespace Ktulchu\Yii2Chart;
 
 use DateTimeImmutable;
 use InvalidArgumentException;

@@ -18,8 +18,9 @@ This command becomes available when the package is published on Packagist. Until
 
 ~~~php
 use app\models\AccessLog;
+use Ktulchu\Yii2Chart\Chartwidget;
 
-echo \rkdev\chart\Chartwidget::widget([
+echo Chartwidget::widget([
     'options' => [
         'modelName' => AccessLog::class,
         'fieldName' => 'created_at',
@@ -33,7 +34,7 @@ echo \rkdev\chart\Chartwidget::widget([
 Sum payment amounts per day of the selected week:
 
 ~~~php
-echo \rkdev\chart\Chartwidget::widget([
+echo Chartwidget::widget([
     'options' => [
         'modelName' => \app\models\Payment::class,
         'fieldName' => 'paid_at',
@@ -71,7 +72,7 @@ Missing intervals are filled with zeroes. One aggregate SQL `GROUP BY` query fet
 
 Requires Yii2 2.0.50+, PHP 8.0+, and MySQL/MariaDB or PostgreSQL. SQL column identifiers are validated against the ActiveRecord table schema. For Unix timestamp fields, PHP and the database session must use the **same time zone** for consistent date grouping (UTC recommended).
 
-The widget loads pinned **Chart.js 4.6.1** UMD from jsDelivr. This requires browser access to the CDN. Override `\rkdev\chart\ChartAssetsBundle` in Yii's asset manager to serve a local copy for offline operation or strict CSP.
+The widget loads pinned **Chart.js 4.6.1** UMD from jsDelivr. This requires browser access to the CDN. Override `\Ktulchu\Yii2Chart\ChartAssetsBundle` in Yii's asset manager to serve a local copy for offline operation or strict CSP.
 
 ## Tests
 
