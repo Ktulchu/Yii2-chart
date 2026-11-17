@@ -2,6 +2,10 @@
 
 A Composer-installable Yii2 widget for ActiveRecord time-series charts (PHP 8+, Chart.js).
 
+## Project background
+
+This widget builds on charting needs and implementation experience from a private commercial Yii2 application. The public repository is a standalone Composer packaging of that work, not a publication of the original application. Its earlier development history remains in private commercial GitLab; public GitHub commits show the independent package's history.
+
 ## Install
 
 ~~~bash
