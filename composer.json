@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "rkdev\\chart\\": "src/"
+            "Ktulchu\\Yii2Chart\\": "src/"
         }
     }
 }

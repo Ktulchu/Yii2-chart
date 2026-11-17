@@ -49,8 +49,8 @@ namespace yii\helpers {
     }
 }
 namespace chartTests {
-    use rkdev\chart\Chart;
-    use rkdev\chart\Chartwidget;
+    use Ktulchu\Yii2Chart\Chart;
+    use Ktulchu\Yii2Chart\Chartwidget;
     use yii\base\InvalidConfigException;
     use yii\db\ActiveRecord;
 
