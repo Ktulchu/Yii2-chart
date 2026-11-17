@@ -9,10 +9,10 @@ This widget builds on charting needs and implementation experience from a privat
 ## Install
 
 ~~~bash
-composer require ktulchu/yii2-chart
+composer require ktulchu/yii2-chart:^0.1
 ~~~
 
-This command becomes available when the package is published on Packagist. Until then, configure its GitHub repository as a Composer VCS source (with access to the private repository) before running Composer.
+Published on [Packagist](https://packagist.org/packages/ktulchu/yii2-chart). Install the tagged `v0.1.0` release with Composer; no custom VCS repository is required.
 
 ## Usage
 
