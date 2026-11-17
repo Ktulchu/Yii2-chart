@@ -1,0 +1,44 @@
+name: Publish first GitHub release
+on:
+  workflow_run:
+    workflows: ["PHP 8 and database compatibility"]
+    types: [completed]
+    branches: [master]
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create v0.1.0 only for the verified release merge
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+          subject="$(gh api "repos/$GITHUB_REPOSITORY/commits/$SHA" --jq '.commit.message | split("\n")[0]')"
+          if [[ "$subject" != "release: v0.1.0" ]]; then
+            echo "Not the v0.1.0 release merge; skipping."
+            exit 0
+          fi
+          current="$(gh api "repos/$GITHUB_REPOSITORY/commits/master" --jq '.sha')"
+          if [[ "$current" != "$SHA" ]]; then
+            echo "Refusing release from an outdated master commit" >&2
+            exit 1
+          fi
+          if gh release view v0.1.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release v0.1.0 already exists; nothing to do."
+            exit 0
+          fi
+          if gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/v0.1.0" >/dev/null 2>&1; then
+            echo "Tag already exists without release; refusing to retarget it" >&2
+            exit 1
+          fi
+          gh release create v0.1.0 \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$SHA" \
+            --title "v0.1.0 — First Yii2 Chart release" \
+            --notes "First tagged Composer release of ktulchu/yii2-chart. Includes Yii2 ActiveRecord time-series charts, MySQL/PostgreSQL integration tests, PHP 8.0+ compatibility, and the corrected public namespace Ktulchu\\Yii2Chart. Install via: composer require ktulchu/yii2-chart:^0.1"
