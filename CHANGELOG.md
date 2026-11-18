@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.1 — remove obsolete Flot assets
+
+- Remove the unused bundled Flot library, examples, and JavaScript files after migration to Chart.js.
+- No changes to the widget API, ActiveRecord queries, or Chart.js rendering.
+
+
 ## v0.1.0 — first public release
 
 - Composer-installable Yii2 ActiveRecord time-series Chart.js widget.
